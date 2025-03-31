@@ -53,6 +53,20 @@ body {
     transform: scale(1.05);
 }
 
+.nav-items > ul > button {
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.nav-items > ul > button:hover {
+    background-color: #eaeaea;
+    transform: scale(1.05);
+}
+
 /* Responsive Navigation */
 @media (max-width: 768px) {
     .header {
@@ -66,13 +80,6 @@ body {
     }
 }
 
-/* Search Bar */
-.search {
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-}
-
 /* Restaurant Container */
 .res-container {
     display: flex;
@@ -81,13 +88,6 @@ body {
     gap: 20px;
     padding: 20px;
 }
-
-/* .res-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
-    padding: 20px;
-} */
 
 /* Restaurant Card */
 .res-card {
@@ -139,17 +139,101 @@ body {
     color: #333;
 }
 
-.filter-btn {
+/* Restaurant Container */
+.shimmer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Restaurant Card */
+.shimmer-card {
+    padding: 10px;
+    width: 250px;
+    height: 400px;
+    border-radius: 12px;
+    background: linear-gradient(120deg, #f6f7f8 25%, #eaeaea 50%, #f6f7f8 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+/* Shimmer Animation */
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* Hover Effect */
+.shimmer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .shimmer-card {
+        width: 180px;
+        height: 320px;
+    }
+}
+
+/* Search & Filter - Side by Side */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+}
+
+/* Search Box */
+.search-box {
+    width: 250px;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.search-box:focus {
+    border-color: #c0132d;
+    box-shadow: 0px 0px 5px rgba(192, 19, 45, 0.3);
+}
+
+/* Buttons */
+.search-btn, .filter-btn {
     background-color: #c0132d;
     color: white;
     border: none;
     padding: 10px 20px;
     font-size: 16px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.filter-btn:hover {
-    background-color: #892314;
-    cursor: pointer;
+.search-btn:hover, .filter-btn:hover {
+    background-color: #a01025;
+    transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .search-container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .search-box {
+        width: 70%;
+    }
 }

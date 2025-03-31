@@ -8,9 +8,7 @@ const RestaurantCard = ({ restaurant }) => {
 
    // Complete Image URL
    const imageUrl = CDN_URL + restaurant.info.cloudinaryImageId;
-
-    console.log(imageUrl);
-
+   
     return (
         <div className="res-card">
              <img 
