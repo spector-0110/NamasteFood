@@ -28,9 +28,7 @@ const Header = () => {
                     <li>Contact Us</li>
                     <li>Cart</li>
                     <button 
-                        onClick={() => {
-                            onClick();
-                        }}>
+                        onClick={onClick}>
                         {btnName}
                     </button>
                 </ul>

@@ -16,9 +16,12 @@ const Body = () => {
 
     const fetchData = async () => {
         const response = await fetch(
-            "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6939957&lng=77.4549679&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+            // used cors temporray server:: "https://cors-anywhere.herokuapp.com/"
+            "https://cors-anywhere.herokuapp.com/https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.69399&lng=77.08334",
         );
         const jsonData = await response.json();
+
+        console.log(jsonData);
 
         const fetchedRestaurants =
             jsonData.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
