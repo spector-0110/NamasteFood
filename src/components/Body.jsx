@@ -1,33 +1,45 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import RestaurantList from "./RestaurantList";
 import Shimmer from "./Shimmer";
+import { ThemeContext } from "../context/ThemeProvider";
 
 const Body = () => {
-    console.log("Body Rendered");
-
     const [restaurants, setRestaurants] = useState([]);
     const [filteredRestaurants, setFilteredRestaurants] = useState([]);
     const [filterBtnName, setFilterBtnName] = useState("Top Rated Restaurants");
     const [searchText, setSearchText] = useState("");
+    const [error, setError] = useState(null);
+    const { theme } = useContext(ThemeContext);
 
     useEffect(() => {
         fetchData();
     }, []);
-
+    
+    
     const fetchData = async () => {
-        const response = await fetch(
-            // used cors temporray server:: "https://cors-anywhere.herokuapp.com/"
-            "https://cors-anywhere.herokuapp.com/https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.69399&lng=77.08334",
-        );
-        const jsonData = await response.json();
-
-        console.log(jsonData);
-
-        const fetchedRestaurants =
-            jsonData.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
-
-        setRestaurants(fetchedRestaurants);
-        setFilteredRestaurants(fetchedRestaurants);
+        try {
+            const response = await fetch(
+                "https://cors-anywhere.herokuapp.com/https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.69399&lng=77.08334",
+                {
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                }
+            );
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const jsonData = await response.json();
+            const fetchedRestaurants = jsonData.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
+            setRestaurants(fetchedRestaurants);
+            setFilteredRestaurants(fetchedRestaurants);
+            setError(null);
+        } catch (err) {
+            console.error("Error fetching restaurants:", err);
+            setError("Failed to load restaurants. Please try again later.");
+            setRestaurants([]);
+            setFilteredRestaurants([]);
+        }
     };
 
     useEffect(() => {
@@ -55,17 +67,21 @@ const Body = () => {
         }
     };
 
+    if (error) {
+        return <div className={`error ${theme === 'dark' ? 'error-dark' : ''}`}>{error}</div>;
+    }
+
     if (restaurants.length === 0) {
         return <Shimmer />;
     }
 
     return (
-        <div className="body">
+        <div className={`body ${theme === 'dark' ? 'body-dark' : ''}`}>
             <div className="search-container">
                 <input
                     placeholder="Search restaurants or cuisines..."
                     type="text"
-                    className="search-box"
+                    className={`search-box ${theme === 'dark' ? 'search-box-dark' : ''}`}
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)}
                 />
