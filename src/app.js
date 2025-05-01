@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import React from "react";
+import React, {lazy, Suspense} from "react";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import About from "./components/About";
@@ -10,10 +10,10 @@ import ThemeProvider, { useTheme } from "./context/ThemeProvider";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const Groc=lazy( () => import("./components/Groc"));
 
 const AppLayout = () => {
     const { theme } = useTheme();
-    
     return (
         <div className="app" data-theme={theme}>
             <Header />
@@ -47,7 +47,11 @@ const appRouter = createBrowserRouter([
             {
                 path: "/restaurant/:resId",
                 element: <RestaurantMenu />
-            }
+            },
+            {
+                path: "/grocery",
+                element: <Suspense fallback={<h1>Loading...</h1>}><Groc /></Suspense>
+            }   
         ]
     }
 ]);

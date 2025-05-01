@@ -1,14 +1,17 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { LOGO_URL } from "../utils/constants";
-import { ThemeContext } from "../context/ThemeProvider";
+import { useTheme } from "../context/ThemeProvider";
+import { useOnlineStatus } from "../utils/useOnlineStatus";
 
 const Header = () => {
+    console.log("Header Rendered");
     const [btnName, setBtnName] = useState("Login");
-    const { theme, toggleTheme } = useContext(ThemeContext);
+    const { theme, toggleTheme } = useTheme();
+    const isOnline=useOnlineStatus();
 
     return (
-        <div className={`header ${theme === 'dark' ? 'header-dark' : ''}`}>
+        <div className={`header ${theme === 'dark' ? 'header-dark' : ''}` }>
             <div className="header-content">
                 <div className="logo-container">
                     <Link to="/">
@@ -25,6 +28,16 @@ const Header = () => {
                         </li>
                         <li>
                             <Link to="/contact">Contact</Link>
+                        </li>
+                        <li>
+                            <Link to="/grocery">Grocery</Link>
+                        </li>
+                        <li>
+                            {isOnline ? (
+                                <span className="online-status">🟢 Online</span>
+                            ) : (
+                                <span className="offline-status">🔴 Offline</span>
+                            )}
                         </li>
                         <li>
                             <button
